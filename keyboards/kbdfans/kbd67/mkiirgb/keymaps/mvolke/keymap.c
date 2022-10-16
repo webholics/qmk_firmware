@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		    KC_TRNS,                KC_TRNS,     KC_TRNS,    KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,  KC_TRNS,
 			KC_LCTL,                KC_TRNS,     KC_TRNS,    KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS,                KC_TRNS,  KC_TRNS,
 		    KC_TRNS,                KC_TRNS,     KC_TRNS,    KC_TRNS,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS,                KC_TRNS,  KC_TRNS,
-		    KC_TRNS,                KC_TRNS,     KC_TRNS,                     LCTL(KC_SPC),              KC_TRNS,          KC_TRNS,    KC_TRNS,                KC_TRNS,  KC_TRNS),
+		    KC_TRNS,                KC_TRNS,     KC_TRNS,                     KC_TRNS,                      KC_TRNS,          KC_TRNS,    KC_TRNS,                KC_TRNS,  KC_TRNS),
 		[LAYER_SETTINGS] = LAYOUT_65_ansi_blocker(
 			TO(LAYER_BASE),         UC_M_MA,     UC_M_WC,    UC_M_LN,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,  KC_TRNS,
 		    KC_TRNS,                RGB_TOG,     RGB_MOD,    RGB_HUI,RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_TRNS, KC_TRNS,    KC_TRNS,    KC_TRNS,    QK_BOOT,  KC_TRNS,
@@ -60,3 +60,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		    KC_TRNS,                KC_TRNS,                     KC_TRNS,                         KC_MPLY,                                   KC_TRNS,                            KC_TRNS,    KC_MPRV,                KC_VOLD,  KC_MNXT),
 };
 
+// RGB Matrix
+// ----------------------------------------------------------------------------------------------
+
+void rgb_matrix_indicators_user(void) {
+    if (host_keyboard_led_state().caps_lock) {
+        rgb_matrix_set_color(30, RGB_WHITE);
+    }
+
+    if (layer_state_is(LAYER_GAMING)) {
+        rgb_matrix_set_color(29, RGB_WHITE);
+    }
+
+    if (layer_state_is(LAYER_SETTINGS)) {
+        rgb_matrix_set_color(0, RGB_WHITE);
+        rgb_matrix_set_color(43, RGB_WHITE);
+    }
+}
+
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_TYPING_HEATMAP);
+}
